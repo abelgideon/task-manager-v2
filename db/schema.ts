@@ -46,7 +46,7 @@ export const TASK_STATUS = {
   completed: { label: "Completed", value: "completed" },
 };
 
-export const ISSUE_PRIORITY = {
+export const TASK_PRIORITY = {
   low: { label: "Low", value: "low" },
   medium: { label: "Medium", value: "medium" },
   high: { label: "High", value: "high" },
