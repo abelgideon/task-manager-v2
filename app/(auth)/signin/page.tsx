@@ -87,7 +87,7 @@ export default function SignInPage() {
           </p>
         )}
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? "Loading..." : "Log in"}
           </Button>
         </CardFooter>
