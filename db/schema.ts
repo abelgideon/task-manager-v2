@@ -1,5 +1,12 @@
 import { InferSelectModel, relations } from "drizzle-orm";
-import { pgTable, serial, text, timestamp, pgEnum } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  pgEnum,
+  uuid,
+} from "drizzle-orm/pg-core";
 
 export const statusEnum = pgEnum("status", [
   "pending",
@@ -9,7 +16,7 @@ export const statusEnum = pgEnum("status", [
 export const priorityEnum = pgEnum("priority", ["low", "medium", "high"]);
 
 export const tasks = pgTable("tasks", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   title: text("title").notNull(),
   description: text("description"),
   status: statusEnum("status").default("pending").notNull(),
@@ -20,7 +27,7 @@ export const tasks = pgTable("tasks", {
 });
 
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+  id: uuid("id").defaultRandom().primaryKey(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
