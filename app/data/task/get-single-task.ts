@@ -1,0 +1,23 @@
+import { db } from "@/db";
+import { tasks } from "@/db/schema";
+import { getSession } from "@/lib/auth";
+import { eq, and } from "drizzle-orm";
+
+export async function getSingleTask(userId: string, taskId: string) {
+  const session = await getSession();
+
+  if (!session) {
+    return null;
+  }
+  try {
+    const result = await db
+      .select()
+      .from(tasks)
+      .where(and(eq(tasks.userId, userId), eq(tasks.id, taskId)));
+
+    return result[0] || null;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}

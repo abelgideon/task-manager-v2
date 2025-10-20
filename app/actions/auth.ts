@@ -52,7 +52,7 @@ export async function signInAction(
       };
     }
 
-    await createSession(user.id);
+    await createSession(user.id, user.email);
 
     return {
       success: true,
@@ -107,7 +107,7 @@ export async function signUpAction(
       };
     }
 
-    await createSession(user.id);
+    await createSession(user.id, user.email);
 
     return {
       success: true,

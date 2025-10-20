@@ -39,9 +39,9 @@ export async function comparePassword(
   return compare(password, hashedPassword);
 }
 
-export async function createSession(userId: string) {
+export async function createSession(userId: string, email: string) {
   try {
-    const token = await encrypt({ userId });
+    const token = await encrypt({ userId, email });
 
     const cookieStore = await cookies();
     cookieStore.set({
@@ -61,7 +61,7 @@ export async function createSession(userId: string) {
   }
 }
 
-export const getSession = cache(async () => {
+export const getSession = cache(async (): Promise<JWTPayload | null> => {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("auth_token")?.value;
@@ -69,7 +69,9 @@ export const getSession = cache(async () => {
     if (!token) return null;
     const payload = await decrypt(token);
 
-    return payload ? { userId: payload.userId } : null;
+    return payload
+      ? { userId: payload.userId as string, email: payload.email as string }
+      : null;
   } catch (error) {
     if (
       error instanceof Error &&
@@ -89,17 +91,4 @@ export const getSession = cache(async () => {
 export async function deleteSession() {
   const cookieStore = await cookies();
   cookieStore.delete("auth_token");
-}
-
-export async function getSessionFromMiddleware(request: NextRequest) {
-  const token = request.cookies.get("auth_token")?.value;
-  if (!token) return null;
-
-  try {
-    const payload = await decrypt(token);
-    return payload ? { userId: payload.userId } : null;
-  } catch (error) {
-    console.error("Error verifying session token:", error);
-    return null;
-  }
 }
