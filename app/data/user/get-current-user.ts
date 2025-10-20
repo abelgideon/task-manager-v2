@@ -14,7 +14,7 @@ export async function getCurrentUser() {
     const result = await db
       .select()
       .from(users)
-      .where(eq(users.id, session.userId as any));
+      .where(eq(users.id, session.userId as string));
 
     return result[0] || null;
   } catch (e) {
