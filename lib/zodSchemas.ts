@@ -29,3 +29,6 @@ export type JWTPayload = {
   email: string;
   [key: string]: string | number | boolean | null | undefined;
 };
+
+export type Status = "pending" | "in_progress" | "completed";
+export type Priority = "low" | "medium" | "high";

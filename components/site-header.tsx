@@ -1,6 +1,9 @@
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ModeToggle } from "./ui/mode-toggle";
+import Link from "next/link";
+import { buttonVariants } from "./ui/button";
+import { PlusIcon } from "lucide-react";
 
 export function SiteHeader() {
   return (
@@ -13,6 +16,12 @@ export function SiteHeader() {
         />
         <h1 className="text-base font-medium">Tasks</h1>
         <div className="ml-auto flex items-center gap-2">
+          <Link href="/tasks/new" className={buttonVariants({ size: "sm" })}>
+            <span className="flex items-center">
+              <PlusIcon size={18} className="mr-2" />
+              Create Task
+            </span>
+          </Link>
           <ModeToggle />
         </div>
       </div>
