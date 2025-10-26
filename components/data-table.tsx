@@ -17,6 +17,19 @@ import { useRouter } from "next/navigation";
 
 export function DataTable({ data }: { data: taskSchemaTableType[] }) {
   const router = useRouter();
+  function badgeColor(state: string) {
+    switch (state) {
+      case "pending":
+      case "high":
+        return "destructive";
+      case "in_progress":
+      case "low":
+        return "default";
+      case "completed":
+      case "medium":
+        return "secondary";
+    }
+  }
   return (
     <div className="overflow-x-auto rounded-lg border">
       <Table>
@@ -38,12 +51,14 @@ export function DataTable({ data }: { data: taskSchemaTableType[] }) {
               >
                 <TableCell>{task.title}</TableCell>
                 <TableCell>
-                  <Badge>
+                  <Badge variant={badgeColor(task.priority)}>
                     {TASK_PRIORITY[task.priority as Priority].label}
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <Badge>{TASK_STATUS[task.status as Status].label}</Badge>
+                  <Badge variant={badgeColor(task.status)}>
+                    {TASK_STATUS[task.status as Status].label}
+                  </Badge>
                 </TableCell>
                 <TableCell>
                   {formatRelativeTime(new Date(task.createdAt))}
