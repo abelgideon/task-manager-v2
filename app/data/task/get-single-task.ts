@@ -10,12 +10,15 @@ export async function getSingleTask(taskId: string) {
     return null;
   }
   try {
-    const result = await db
+    const task = await db
       .select()
       .from(tasks)
       .where(and(eq(tasks.userId, session.userId), eq(tasks.id, taskId)));
 
-    return result[0] || null;
+    return {
+      ...task[0],
+      description: task[0].description ?? undefined,
+    };
   } catch (e) {
     console.error(e);
     return null;

@@ -1,46 +1,19 @@
-"use client";
-
-import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { deleteTaskAction } from "@/app/actions/tasks";
-import { useTransition } from "react";
-import { toast } from "sonner";
-import { useParams, useRouter } from "next/navigation";
+import { getSingleTask } from "@/app/data/task/get-single-task";
 import { UpdateTaskForm } from "./_components/UpdateTaskForm";
+import { notFound } from "next/navigation";
 
-export default function SingleTaskPage() {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
-  const { id: taskId } = useParams();
-  console.log(taskId);
-  const handleDelete = async () => {
-    startTransition(async () => {
-      try {
-        await deleteTaskAction(taskId as string);
+export default async function SingleTaskPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id: taskId } = await params;
 
-        toast.success("Task Deleted Successfully");
-        router.push("/dashboard");
-      } catch (e) {
-        toast.error("Something went wrong");
-      }
-    });
-  };
+  const task = await getSingleTask(taskId);
 
-  return (
-    <>
-      <div className="flex justify-between">
-        <h1 className="text-2xl font-bold mb-6">Update Task</h1>
-        <Button
-          variant="destructive"
-          onClick={handleDelete}
-          disabled={isPending}
-        >
-          <Trash2 />
-          {isPending ? "Deleting..." : "Delete Task"}
-        </Button>
-      </div>
+  if (!task) {
+    return notFound();
+  }
 
-      <UpdateTaskForm />
-    </>
-  );
+  return <UpdateTaskForm task={task} />;
 }
