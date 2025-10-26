@@ -1,8 +1,6 @@
 "use client";
 import { createTaskAction } from "@/app/actions/tasks";
-import { createTask } from "@/app/data/task/create-task";
 import { buttonVariants } from "@/components/ui/button";
-import { Task } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { ActionResponse } from "@/lib/zodSchemas";
 import { PlusIcon } from "lucide-react";
@@ -10,18 +8,13 @@ import { useRouter } from "next/navigation";
 import { useActionState } from "react";
 import { toast } from "sonner";
 
-interface TaskFormProps {
-  task?: Task;
-  isEditing?: boolean;
-}
-
 const initialState: ActionResponse = {
   success: false,
   message: "",
   errors: undefined,
 };
 
-export function TaskForm({ task, isEditing = false }: TaskFormProps) {
+export function UpdateTaskForm() {
   const router = useRouter();
   const [state, formAction, isLoading] = useActionState<
     ActionResponse,
@@ -105,7 +98,7 @@ export function TaskForm({ task, isEditing = false }: TaskFormProps) {
         disabled={isLoading}
       >
         <PlusIcon />
-        {isLoading ? "Loading..." : isEditing ? "Update Task" : "Create Task"}
+        {isLoading ? "Updating..." : "Update Task"}
       </button>
     </form>
   );

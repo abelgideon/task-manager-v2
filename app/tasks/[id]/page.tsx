@@ -1,12 +1,12 @@
 "use client";
 
-import { TaskForm } from "../_components/TaskForm";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteTaskAction } from "@/app/actions/tasks";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { useParams, useRouter } from "next/navigation";
+import { UpdateTaskForm } from "./_components/UpdateTaskForm";
 
 export default function SingleTaskPage() {
   const router = useRouter();
@@ -40,7 +40,7 @@ export default function SingleTaskPage() {
         </Button>
       </div>
 
-      <TaskForm isEditing={true} />
+      <UpdateTaskForm />
     </>
   );
 }
