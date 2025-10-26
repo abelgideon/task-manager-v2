@@ -17,6 +17,7 @@ export const taskSchema = z.object({
 });
 
 export const taskSchemaTable = z.object({
+  id: z.string().min(1, "ID is required"),
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
   status: z.enum(statusEnum, { message: "Status is required" }),

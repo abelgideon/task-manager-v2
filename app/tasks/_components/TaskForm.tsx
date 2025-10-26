@@ -46,7 +46,7 @@ export function TaskForm({ task, userId, isEditing = false }: TaskFormProps) {
   return (
     <form action={formAction} className="space-y-6">
       <div>
-        <label className="text-xl mb-2 block" htmlFor="title">
+        <label className="mb-2 block" htmlFor="title">
           Title
         </label>
         <input
@@ -59,7 +59,7 @@ export function TaskForm({ task, userId, isEditing = false }: TaskFormProps) {
         />
       </div>
       <div>
-        <label className="text-xl mb-2 block" htmlFor="description">
+        <label className="mb-2 block" htmlFor="description">
           Description
         </label>
         <textarea
@@ -72,7 +72,7 @@ export function TaskForm({ task, userId, isEditing = false }: TaskFormProps) {
       </div>
       <div className="grid grid-cols-2 gap-10">
         <div>
-          <label className="text-xl mb-2 block" htmlFor="priority">
+          <label className="mb-2 block" htmlFor="priority">
             Priority
           </label>
           <select
@@ -87,7 +87,7 @@ export function TaskForm({ task, userId, isEditing = false }: TaskFormProps) {
         </div>
 
         <div>
-          <label className="text-xl mb-2 block" htmlFor="status">
+          <label className="mb-2 block" htmlFor="status">
             Status
           </label>
           <select name="status" id="status" className="block w-full border p-4">

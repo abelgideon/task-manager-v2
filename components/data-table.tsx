@@ -30,11 +30,11 @@ export function DataTable({ data }: { data: taskSchemaTableType[] }) {
           {data.length > 0 ? (
             data.map((task, index) => (
               <TableRow
-                key={index}
+                key={task.id}
                 className="hover:bg-muted/50 cursor-pointer transition"
               >
                 <TableCell>
-                  <Link href={`/tasks/${index}`} className="hover:underline">
+                  <Link href={`/tasks/${task.id}`} className="hover:underline">
                     {task.title}
                   </Link>
                 </TableCell>
