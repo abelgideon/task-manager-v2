@@ -12,7 +12,6 @@ import { toast } from "sonner";
 
 interface TaskFormProps {
   task?: Task;
-  userId: string;
   isEditing?: boolean;
 }
 
@@ -22,7 +21,7 @@ const initialState: ActionResponse = {
   errors: undefined,
 };
 
-export function TaskForm({ task, userId, isEditing = false }: TaskFormProps) {
+export function TaskForm({ task, isEditing = false }: TaskFormProps) {
   const router = useRouter();
   const [state, formAction, isLoading] = useActionState<
     ActionResponse,

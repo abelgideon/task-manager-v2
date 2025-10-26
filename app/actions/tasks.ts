@@ -4,6 +4,7 @@ import { ActionResponse, taskSchema } from "@/lib/zodSchemas";
 import z from "zod";
 import { createTask } from "../data/task/create-task";
 import { getSession } from "@/lib/auth";
+import { deleteTask } from "../data/task/delete-task";
 
 export async function createTaskAction(
   formData: FormData
@@ -37,5 +38,20 @@ export async function createTaskAction(
   } catch (e) {
     console.error(e);
     return { success: false, error: "Error Creating Task" };
+  }
+}
+
+export async function deleteTaskAction(taskId: string) {
+  const session = await getSession();
+
+  if (!session) {
+    return;
+  }
+  try {
+    await deleteTask(session.userId, taskId);
+    return;
+  } catch (e) {
+    console.error(e);
+    return;
   }
 }
