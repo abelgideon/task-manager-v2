@@ -1,9 +1,10 @@
 import { db } from "@/db";
 import { tasks } from "@/db/schema";
 import { getSession } from "@/lib/auth";
+import { taskSchemaType } from "@/lib/zodSchemas";
 import { eq, and } from "drizzle-orm";
 
-export async function getSingleTask(taskId: string) {
+export async function updateTask(taskId: string, data: taskSchemaType) {
   const session = await getSession();
 
   if (!session) {
@@ -11,11 +12,14 @@ export async function getSingleTask(taskId: string) {
   }
   try {
     const result = await db
-      .select()
-      .from(tasks)
+      .update(tasks)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
       .where(and(eq(tasks.userId, session.userId), eq(tasks.id, taskId)));
 
-    return result[0] || null;
+    return result || null;
   } catch (e) {
     console.error(e);
     return null;

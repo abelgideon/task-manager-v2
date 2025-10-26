@@ -13,7 +13,6 @@ export const taskSchema = z.object({
   description: z.string().optional(),
   status: z.enum(statusEnum, { message: "Status is required" }),
   priority: z.enum(priorityEnum, { message: "Priority is required" }),
-  userId: z.string().min(1, "User ID is required"),
 });
 
 export const taskSchemaTable = z.object({

@@ -10,8 +10,14 @@ export async function createTask(data: taskSchemaType) {
   if (!session) {
     return null;
   }
+
+  const dataWithUser = {
+    ...data,
+    userId: session.userId as string,
+  };
+
   try {
-    const results = await db.insert(tasks).values(data).returning();
+    const results = await db.insert(tasks).values(dataWithUser).returning();
     return results[0] || null;
   } catch (e) {
     console.error(e);

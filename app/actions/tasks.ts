@@ -10,13 +10,11 @@ export async function createTaskAction(
   formData: FormData
 ): Promise<ActionResponse> {
   try {
-    const session = await getSession();
     const data = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       status: formData.get("status") as string,
       priority: formData.get("priority") as string,
-      userId: session?.userId as string,
     };
 
     const validationResult = taskSchema.safeParse(data);
@@ -42,13 +40,8 @@ export async function createTaskAction(
 }
 
 export async function deleteTaskAction(taskId: string) {
-  const session = await getSession();
-
-  if (!session) {
-    return;
-  }
   try {
-    await deleteTask(session.userId, taskId);
+    await deleteTask(taskId);
     return;
   } catch (e) {
     console.error(e);
