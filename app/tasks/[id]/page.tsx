@@ -1,3 +1,17 @@
-export default function SingleTaskPage() {
-  return <h1>Single task</h1>;
+import UnauthorizedPage from "@/app/unauthorized/page";
+import { getSession } from "@/lib/auth";
+import { TaskForm } from "../_components/TaskForm";
+
+export default async function SingleTaskPage() {
+  const session = await getSession();
+
+  if (!session) {
+    return <UnauthorizedPage />;
+  }
+  return (
+    <>
+      <h1 className="text-2xl font-bold mb-6">Update Task</h1>
+      <TaskForm userId={session.userId} isEditing={true} />
+    </>
+  );
 }
